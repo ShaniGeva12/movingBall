@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ControlStatusService } from './services/control-status.service';
 import { ControllerButton } from './model/controller-button';
 import { Control } from './model/control';
+import { Observable, Subscription } from 'rxjs';
+import { ScreenBoundriesService } from '../screen/services/screen-boundries.service';
 
 @Component({
   selector: 'app-control',
@@ -15,21 +17,40 @@ export class ControlComponent {
     left: 0,
   };
 
-  constructor(private controlStatusService: ControlStatusService) {}
+  maxBoundriesSub: Subscription | undefined;
+  maxBoundries$: Observable<Control> =
+    this.screenBoundriesService.maxBoundries$;
+  maxBoundries: Control = { up: 0, left: 0 };
+  // isOutsideBoundries = false;
+
+  constructor(
+    private controlStatusService: ControlStatusService,
+    private screenBoundriesService: ScreenBoundriesService
+  ) {}
+
+  ngOnInit(): void {
+    this.maxBoundriesSub = this.maxBoundries$.subscribe(
+      (val) => (this.maxBoundries = val)
+    );
+  }
 
   onButtonClicked(btn: ControllerButton): void {
     switch (btn) {
       case 'up':
-        this.control.up++;
+        if ((this.control.up + 1) * 10 <= this.maxBoundries.up)
+          this.control.up++;
         break;
       case 'down':
-        this.control.up--;
+        if (Math.abs(this.control.up - 1) * 10 <= this.maxBoundries.up)
+          this.control.up--;
         break;
       case 'left':
-        this.control.left++;
+        if ((this.control.left + 1) * 10 <= this.maxBoundries.left)
+          this.control.left++;
         break;
       case 'right':
-        this.control.left--;
+        if (Math.abs(this.control.left - 1) * 10 <= this.maxBoundries.left)
+          this.control.left--;
         break;
       case 'reset':
         this.control.left = 0;
@@ -40,5 +61,9 @@ export class ControlComponent {
     }
 
     this.controlStatusService.updateControlStatus(this.control);
+  }
+
+  ngOnDestroy(): void {
+    this.maxBoundriesSub?.unsubscribe();
   }
 }
