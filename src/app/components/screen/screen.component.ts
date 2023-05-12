@@ -41,6 +41,7 @@ export class ScreenComponent {
   }
 
   ngAfterViewInit() {
+    // Notice: This checks when first renders. If resizing window the values won't change.
     this.screenRect = this.screenElm.nativeElement.getBoundingClientRect();
     this.dotRect = this.dotElm.nativeElement.getBoundingClientRect();
     this.setMaxPointsInsideScreen();
