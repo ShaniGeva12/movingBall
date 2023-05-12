@@ -63,6 +63,26 @@ export class ControlComponent {
     this.controlStatusService.updateControlStatus(this.control);
   }
 
+  // TODO: make this a directive to function on a higher level
+  onKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.onButtonClicked(this.controllerButton.up);
+        break;
+      case 'ArrowDown':
+        this.onButtonClicked(this.controllerButton.down);
+        break;
+      case 'ArrowLeft':
+        this.onButtonClicked(this.controllerButton.left);
+        break;
+      case 'ArrowRight':
+        this.onButtonClicked(this.controllerButton.right);
+        break;
+      default:
+        break;
+    }
+  }
+
   ngOnDestroy(): void {
     this.maxBoundriesSub?.unsubscribe();
   }
