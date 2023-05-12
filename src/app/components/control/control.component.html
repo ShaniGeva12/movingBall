@@ -1,17 +1,37 @@
 <div class="control-wrapper">
-  <button mat-fab color="primary">
+  <button
+    mat-fab
+    color="primary"
+    (click)="onButtonClicked(controllerButton.up)"
+  >
     <mat-icon>arrow_circle_up</mat-icon>
   </button>
-  <button mat-fab color="primary">
+  <button
+    mat-fab
+    color="primary"
+    (click)="onButtonClicked(controllerButton.down)"
+  >
     <mat-icon>arrow_circle_down</mat-icon>
   </button>
-  <button mat-fab color="primary">
+  <button
+    mat-fab
+    color="primary"
+    (click)="onButtonClicked(controllerButton.left)"
+  >
     <mat-icon>arrow_circle_left</mat-icon>
   </button>
-  <button mat-fab color="primary">
+  <button
+    mat-fab
+    color="primary"
+    (click)="onButtonClicked(controllerButton.right)"
+  >
     <mat-icon>arrow_circle_right</mat-icon>
   </button>
-  <button mat-fab color="primary">
+  <button
+    mat-fab
+    color="primary"
+    (click)="onButtonClicked(controllerButton.reset)"
+  >
     <mat-icon>restart_alt</mat-icon>
   </button>
 </div>
